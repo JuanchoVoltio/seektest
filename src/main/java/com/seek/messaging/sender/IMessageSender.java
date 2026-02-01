@@ -1,12 +1,12 @@
-package com.seek.messaging.sender.http;
+package com.seek.messaging.sender;
 
-import com.seek.messaging.Channel;
-import com.seek.messaging.Message;
-import com.seek.messaging.MessageResult;
+import com.seek.messaging.model.Message;
+import com.seek.messaging.model.MessageResult;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public interface MessageSender {
+public interface IMessageSender {
     /**
      * Channel that this sender supports (can be more specific via config).
      */
@@ -15,5 +15,5 @@ public interface MessageSender {
     /**
      * Send a message asynchronously. Non-blocking, returns a CompletableFuture.
      */
-    CompletableFuture<MessageResult> send(Message message);
+    List<CompletableFuture<MessageResult>> send(Message message);
 }
