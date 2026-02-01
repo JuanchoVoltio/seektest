@@ -1,4 +1,4 @@
-package com.seek.messaging;
+package com.seek.messaging.model;
 
 import lombok.Builder;
 import lombok.Getter;
