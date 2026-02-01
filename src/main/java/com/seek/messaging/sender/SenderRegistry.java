@@ -1,4 +1,7 @@
-package com.seek.messaging;
+package com.seek.messaging.sender.http;
+
+import com.seek.messaging.Channel;
+import com.seek.messaging.sender.http.MessageSender;
 
 import java.util.Map;
 import java.util.Optional;

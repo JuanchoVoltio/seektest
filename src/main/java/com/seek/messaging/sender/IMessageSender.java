@@ -1,4 +1,8 @@
-package com.seek.messaging;
+package com.seek.messaging.sender.http;
+
+import com.seek.messaging.Channel;
+import com.seek.messaging.Message;
+import com.seek.messaging.MessageResult;
 
 import java.util.concurrent.CompletableFuture;
 
