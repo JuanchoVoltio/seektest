@@ -2,8 +2,9 @@ package com.seek.messaging.sender.email;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Getter
 public class SendGridEmailProvider extends AbstractEmailProvider {
 
@@ -13,6 +14,7 @@ public class SendGridEmailProvider extends AbstractEmailProvider {
         form.append("from=").append(emailData.getFrom());
         form.append("&to=").append(emailData.getTo());
         form.append("&subject=").append(emailData.getSubject());
+        form.append("&text=").append(emailData.getText());
 
         return form.toString();
     }
