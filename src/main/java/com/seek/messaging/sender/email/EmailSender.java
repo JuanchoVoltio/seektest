@@ -36,17 +36,7 @@ public class EmailSender implements IMessageSender {
     public List<CompletableFuture<MessageResult>> send(Message message) {
         List<CompletableFuture<MessageResult>> results = new ArrayList<>();
 
-        Object payload = message.getPayload();
-        if (!(payload instanceof EmailPayload)) {
-            //log.warn("SendGridEmailSender received invalid payload type: {}", payload == null ? "null" : payload.getClass());
-            return List.of(CompletableFuture.completedFuture(MessageResult.builder()
-                    .success(false)
-                    .message(null)
-                    .error("Invalid payload type for EMAIL")
-                    .timestamp(Instant.now())
-                    .build()));
-        }
-        EmailPayload emailData = (EmailPayload) payload;
+        EmailPayload emailData = toEmailPayload(message.getPayload());
 
         providers.forEach(provider -> {
             String endpoint = provider.getEndpoint();
@@ -97,5 +87,14 @@ public class EmailSender implements IMessageSender {
         });
 
         return results;
+    }
+
+    private EmailPayload toEmailPayload(Map<String, String> payload) {
+        return EmailPayload.builder()
+                .from(payload.get("from").toString())
+                .to(payload.get("to").toString())
+                .subject(payload.get("subject"))
+                .text(payload.get("message"))
+                .build();
     }
 }

@@ -2,13 +2,15 @@ package com.seek.messaging.sender.email;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+
+@SuperBuilder
 @Getter
 public abstract class AbstractEmailProvider {
-    private String name;
-    private String endpoint;
-    private String contentType;
+    protected String name;
+    protected String endpoint;
+    protected String contentType;
 
     public abstract String getForm(EmailPayload emailData);
 }
