@@ -11,6 +11,6 @@ import java.util.Map;
 public final class MessageResult {
     private final boolean success;
     private String message;
-    private final Instant timestamp;
     private String error;
+    private final Instant timestamp;
 }

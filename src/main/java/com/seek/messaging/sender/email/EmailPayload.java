@@ -11,5 +11,5 @@ public class EmailPayload {
     String from;
     String to;
     String subject;
-    Map<String, String> additionalData;
+    String text;
 }
