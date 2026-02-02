@@ -49,7 +49,9 @@ class EmailSenderTest {
     public void startUp() throws IOException {
         SendGridEmailProvider provider1 = SendGridEmailProvider.builder()
                 .name("Send Grid").contentType("application/json").endpoint("https://sendgrid.endpoint").build();
-        testSubject = new EmailSender(List.of(provider1), httpClient);
+        MailgunEmailProvider provider2 = MailgunEmailProvider.builder()
+                .name("Send Grid").contentType("application/json").endpoint("https://sendgrid.endpoint").build();
+        testSubject = new EmailSender(List.of(provider1, provider2), httpClient);
         server = new MockWebServer();
         server.start();
     }
@@ -63,8 +65,8 @@ class EmailSenderTest {
     @Test
     void send_shouldSendMessagesForAllProviders() throws ExecutionException, InterruptedException {
         //GIVEN
-        when(httpResponse.statusCode()).thenReturn(200);
-        when(httpResponse.body()).thenReturn("{\"message\":\"Queued.\"}");
+        when(httpResponse.statusCode()).thenReturn(200).thenReturn(400);
+        when(httpResponse.body()).thenReturn("{\"message\":\"General Kenobi!\"}").thenReturn("{\"message\":\"Queued.\"}");
 
         Map<String, String> payload = Map.of("from", "obi.wan@jedi.org",
                 "to", "you@gmail.com",
@@ -87,8 +89,9 @@ class EmailSenderTest {
         List<CompletableFuture<MessageResult>> result = testSubject.send(message);
 
         //THEN
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
         assertTrue(result.get(0).get().isSuccess());
+        assertFalse(result.get(1).get().isSuccess());
     }
 //    @Test
 //    void send_shouldReturnAnErrorResponseWhenPayloadIsNotForEmail(){
