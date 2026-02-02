@@ -2,6 +2,7 @@ package com.seek.messaging.sender.sms;
 
 import com.seek.messaging.model.Message;
 import com.seek.messaging.model.MessageResult;
+import com.seek.messaging.util.HttpRequestExecutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +28,7 @@ class SmsSenderTest {
     @Mock
     HttpClient httpClient = HttpClient.newHttpClient();
     @Mock
-    HttpResponse<String> httpResponse;
+    HttpRequestExecutor httpRequestExecutorMock;
     SmsSender testSubject;
 
     @BeforeEach
@@ -36,15 +37,12 @@ class SmsSenderTest {
                 .name("Twilio").endpoint("https://twilio.endpoint/").apiKey("encrypted-key").build();
         TwilioSmsProvider provider2 = TwilioSmsProvider.builder()
                 .name("Twilio").endpoint("https://twilio2.endpoint/").apiKey("encrypted-key2").build();
-        testSubject = new SmsSender(List.of(provider1, provider2), httpClient);
+        testSubject = new SmsSender(List.of(provider1, provider2), httpRequestExecutorMock);
     }
 
     @Test
     void send_shouldSendMessagesForAllProviders() throws ExecutionException, InterruptedException {
         //GIVEN
-        when(httpResponse.statusCode()).thenReturn(200).thenReturn(400);
-        when(httpResponse.body()).thenReturn("{\"message\":\"General Kenobi!\"}").thenReturn("{\"message\":\"Queued.\"}");
-
         Map<String, String> payload = Map.of("from", "54911121",
                 "to", "57115212",
                 "subject", "Aloha",
@@ -56,11 +54,10 @@ class SmsSenderTest {
                 .headers(Map.of())
                 .build();
 
-        CompletableFuture<HttpResponse<String>> completed = CompletableFuture.completedFuture(httpResponse);
+        CompletableFuture<MessageResult> completedOk = CompletableFuture.completedFuture(MessageResult.builder().success(true).build());
+        CompletableFuture<MessageResult> completedFail = CompletableFuture.completedFuture(MessageResult.builder().success(false).build());
 
-        when(httpClient.sendAsync(any(HttpRequest.class), Mockito.<HttpResponse.BodyHandler<String>>any()))
-                .thenReturn(completed);
-
+        when(httpRequestExecutorMock.execute(any())).thenReturn(completedOk).thenReturn(completedFail);
 
         //WHEN
         List<CompletableFuture<MessageResult>> result = testSubject.send(message);
