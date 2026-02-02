@@ -26,16 +26,10 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class EmailSenderTest {
-
-    @Mock
-    SendGridEmailProvider sendGridEmailProviderMock;
     @Mock
     HttpClient httpClient = HttpClient.newHttpClient();
     @Mock
     HttpResponse<String> httpResponse;
-    @Mock
-    HttpResponse<String> webResponseMock;
-    static MockWebServer server;
     EmailSender testSubject;
 
     @BeforeEach
@@ -45,13 +39,6 @@ class EmailSenderTest {
         MailgunEmailProvider provider2 = MailgunEmailProvider.builder()
                 .name("Send Grid").contentType("application/json").endpoint("https://sendgrid.endpoint").build();
         testSubject = new EmailSender(List.of(provider1, provider2), httpClient);
-        server = new MockWebServer();
-        server.start();
-    }
-
-    @AfterAll
-    static void stopServer() throws Exception {
-        server.shutdown();
     }
 
 
@@ -86,19 +73,4 @@ class EmailSenderTest {
         assertTrue(result.get(0).get().isSuccess());
         assertFalse(result.get(1).get().isSuccess());
     }
-//    @Test
-//    void send_shouldReturnAnErrorResponseWhenPayloadIsNotForEmail(){
-//        //GIVEN
-//        Map<String, String> payload = Map.of("from", "", "to", )
-//        Message message = Message.builder()
-//                .id("123")
-//                .payload(Map.of())
-//                .build();
-//
-//
-//        //WHEN
-//        testSubject.send(message);
-//
-//        //THEN
-//    }
 }
