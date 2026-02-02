@@ -1,9 +1,11 @@
-package com.seek.messaging.sender.sms;
+package com.seek.messaging.sender.sms.implexample;
 
+import com.seek.messaging.sender.sms.AbstractSmsProvider;
+import com.seek.messaging.sender.sms.SmsPayload;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
-public class TwilioSmsProvider extends AbstractSmsProvider{
+public class TwilioSmsProvider extends AbstractSmsProvider {
     @Override
     public String getForm(SmsPayload smsData) {
         StringBuilder form = new StringBuilder();

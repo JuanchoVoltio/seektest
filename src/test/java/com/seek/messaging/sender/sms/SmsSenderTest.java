@@ -2,18 +2,15 @@ package com.seek.messaging.sender.sms;
 
 import com.seek.messaging.model.Message;
 import com.seek.messaging.model.MessageResult;
+import com.seek.messaging.sender.sms.implexample.TwilioSmsProvider;
 import com.seek.messaging.util.HttpRequestExecutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -26,8 +23,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class SmsSenderTest {
     @Mock
-    HttpClient httpClient = HttpClient.newHttpClient();
-    @Mock
     HttpRequestExecutor httpRequestExecutorMock;
     SmsSender testSubject;
 
@@ -39,7 +34,6 @@ class SmsSenderTest {
                 .name("Twilio").endpoint("https://twilio2.endpoint/").apiKey("encrypted-key2").build();
         testSubject = new SmsSender(List.of(provider1, provider2), httpRequestExecutorMock);
     }
-
     @Test
     void send_shouldSendMessagesForAllProviders() throws ExecutionException, InterruptedException {
         //GIVEN

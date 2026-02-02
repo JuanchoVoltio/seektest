@@ -1,5 +1,7 @@
-package com.seek.messaging.sender.email;
+package com.seek.messaging.sender.email.implexample;
 
+import com.seek.messaging.sender.email.AbstractEmailProvider;
+import com.seek.messaging.sender.email.EmailPayload;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;

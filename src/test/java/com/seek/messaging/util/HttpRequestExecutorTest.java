@@ -1,8 +1,5 @@
 package com.seek.messaging.util;
 
-import com.seek.messaging.sender.email.EmailSender;
-import com.seek.messaging.sender.email.MailgunEmailProvider;
-import com.seek.messaging.sender.email.SendGridEmailProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +11,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 

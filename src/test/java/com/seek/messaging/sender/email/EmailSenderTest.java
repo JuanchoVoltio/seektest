@@ -2,6 +2,8 @@ package com.seek.messaging.sender.email;
 
 import com.seek.messaging.model.Message;
 import com.seek.messaging.model.MessageResult;
+import com.seek.messaging.sender.email.implexample.MailgunEmailProvider;
+import com.seek.messaging.sender.email.implexample.SendGridEmailProvider;
 import com.seek.messaging.util.HttpRequestExecutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,12 +35,9 @@ class EmailSenderTest {
         testSubject = new EmailSender(List.of(provider1, provider2), httpRequestExecutorMock);
     }
 
-
     @Test
     void send_shouldSendMessagesForAllProviders() throws ExecutionException, InterruptedException {
         //GIVEN
-//        when(httpResponse.statusCode()).thenReturn(200).thenReturn(400);
-//        when(httpResponse.body()).thenReturn("{\"message\":\"General Kenobi!\"}").thenReturn("{\"message\":\"Queued.\"}");
         Map<String, String> payload = Map.of("from", "obi.wan@jedi.org",
                 "to", "you@gmail.com",
                 "subject", "Hello There",
@@ -53,10 +52,6 @@ class EmailSenderTest {
         CompletableFuture<MessageResult> completedOk = CompletableFuture.completedFuture(MessageResult.builder().success(true).build());
         CompletableFuture<MessageResult> completedFail = CompletableFuture.completedFuture(MessageResult.builder().success(false).build());
 
-//        CompletableFuture<HttpResponse<String>> completed = CompletableFuture.completedFuture(httpResponse);
-
-//        when(httpClient.sendAsync(any(HttpRequest.class), Mockito.<HttpResponse.BodyHandler<String>>any()))
-//                .thenReturn(completed).thenReturn(completed);
         when(httpRequestExecutorMock.execute(any())).thenReturn(completedOk).thenReturn(completedFail);
 
 
