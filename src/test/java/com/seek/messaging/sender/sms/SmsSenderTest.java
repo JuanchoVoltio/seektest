@@ -1,9 +1,7 @@
-package com.seek.messaging.sender.email;
+package com.seek.messaging.sender.sms;
 
 import com.seek.messaging.model.Message;
 import com.seek.messaging.model.MessageResult;
-import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,22 +23,21 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class EmailSenderTest {
+class SmsSenderTest {
     @Mock
     HttpClient httpClient = HttpClient.newHttpClient();
     @Mock
     HttpResponse<String> httpResponse;
-    EmailSender testSubject;
+    SmsSender testSubject;
 
     @BeforeEach
     public void startUp() throws IOException {
-        SendGridEmailProvider provider1 = SendGridEmailProvider.builder()
-                .name("Send Grid").contentType("application/json").endpoint("https://sendgrid.endpoint").build();
-        MailgunEmailProvider provider2 = MailgunEmailProvider.builder()
-                .name("Send Grid").contentType("application/json").endpoint("https://sendgrid.endpoint").build();
-        testSubject = new EmailSender(List.of(provider1, provider2), httpClient);
+        TwilioSmsProvider provider1 = TwilioSmsProvider.builder()
+                .name("Twilio").endpoint("https://twilio.endpoint/").apiKey("encrypted-key").build();
+        TwilioSmsProvider provider2 = TwilioSmsProvider.builder()
+                .name("Twilio").endpoint("https://twilio2.endpoint/").apiKey("encrypted-key2").build();
+        testSubject = new SmsSender(List.of(provider1, provider2), httpClient);
     }
-
 
     @Test
     void send_shouldSendMessagesForAllProviders() throws ExecutionException, InterruptedException {
@@ -48,10 +45,10 @@ class EmailSenderTest {
         when(httpResponse.statusCode()).thenReturn(200).thenReturn(400);
         when(httpResponse.body()).thenReturn("{\"message\":\"General Kenobi!\"}").thenReturn("{\"message\":\"Queued.\"}");
 
-        Map<String, String> payload = Map.of("from", "obi.wan@jedi.org",
-                "to", "you@gmail.com",
-                "subject", "Hello There",
-                "message", "....");
+        Map<String, String> payload = Map.of("from", "54911121",
+                "to", "57115212",
+                "subject", "Aloha",
+                "message", "Hello%20There");
 
         Message message = Message.builder()
                 .id("123")
