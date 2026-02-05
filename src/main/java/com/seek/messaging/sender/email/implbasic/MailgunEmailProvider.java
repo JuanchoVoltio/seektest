@@ -1,4 +1,4 @@
-package com.seek.messaging.sender.email.implexample;
+package com.seek.messaging.sender.email.implbasic;
 
 import com.seek.messaging.sender.email.AbstractEmailProvider;
 import com.seek.messaging.sender.email.EmailPayload;
@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 public class MailgunEmailProvider extends AbstractEmailProvider {
 
     @Override
-    public String getForm(EmailPayload emailData) {
+    public String getRequestParams(EmailPayload emailData) {
         StringBuilder form = new StringBuilder();
         form.append("from=").append(emailData.getFrom());
         form.append("&to=").append(emailData.getTo());

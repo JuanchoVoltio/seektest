@@ -2,8 +2,8 @@ package com.seek.messaging.sender.email;
 
 import com.seek.messaging.model.Message;
 import com.seek.messaging.model.MessageResult;
-import com.seek.messaging.sender.email.implexample.MailgunEmailProvider;
-import com.seek.messaging.sender.email.implexample.SendGridEmailProvider;
+import com.seek.messaging.sender.email.implbasic.MailgunEmailProvider;
+import com.seek.messaging.sender.email.implbasic.SendGridEmailProvider;
 import com.seek.messaging.util.HttpRequestExecutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

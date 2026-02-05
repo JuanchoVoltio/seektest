@@ -2,7 +2,7 @@ package com.seek.messaging.sender.sms;
 
 import com.seek.messaging.model.Message;
 import com.seek.messaging.model.MessageResult;
-import com.seek.messaging.sender.sms.implexample.TwilioSmsProvider;
+import com.seek.messaging.sender.sms.implbasic.TwilioSmsProvider;
 import com.seek.messaging.util.HttpRequestExecutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

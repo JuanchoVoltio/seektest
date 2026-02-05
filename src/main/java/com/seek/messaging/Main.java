@@ -2,7 +2,7 @@ package com.seek.messaging;
 
 import com.seek.messaging.sender.SenderRegistry;
 import com.seek.messaging.sender.email.EmailSender;
-import com.seek.messaging.sender.email.implexample.SendGridEmailProvider;
+import com.seek.messaging.sender.email.implbasic.SendGridEmailProvider;
 import com.seek.messaging.util.HttpRequestExecutor;
 
 import java.net.http.HttpClient;

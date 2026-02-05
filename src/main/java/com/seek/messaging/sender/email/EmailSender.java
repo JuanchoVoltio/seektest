@@ -35,7 +35,7 @@ public class EmailSender  implements IMessageSender {
 
         providers.forEach(provider -> {
             String endpoint = provider.getEndpoint();
-            String form = provider.getForm(emailData);
+            String form = provider.getRequestParams(emailData);
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(endpoint))

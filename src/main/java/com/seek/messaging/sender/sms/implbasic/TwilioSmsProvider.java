@@ -1,4 +1,4 @@
-package com.seek.messaging.sender.sms.implexample;
+package com.seek.messaging.sender.sms.implbasic;
 
 import com.seek.messaging.sender.sms.AbstractSmsProvider;
 import com.seek.messaging.sender.sms.SmsPayload;
@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class TwilioSmsProvider extends AbstractSmsProvider {
     @Override
-    public String getForm(SmsPayload smsData) {
+    public String getRequestParams(SmsPayload smsData) {
         StringBuilder form = new StringBuilder();
         form.append("apikey=").append(this.apiKey);
         form.append("from=").append(smsData.getFrom());

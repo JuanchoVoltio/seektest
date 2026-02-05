@@ -39,7 +39,7 @@ public class SmsSender implements IMessageSender {
         SmsPayload data = toSmsPayload(message.getPayload());
 
         providers.forEach(provider -> {
-            String form = provider.getForm(data);
+            String form = provider.getRequestParams(data);
             String url = provider.getEndpoint() + "?" + form;
 
             HttpRequest request = HttpRequest.newBuilder()
